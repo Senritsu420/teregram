@@ -31,14 +31,18 @@
                 <div class="media-content">
                   <div class="title"><%=link_to post.user.username, user_path(post.user) %></div>
                 </div>
-                <% if current_user.already_favorited?(post) %>
-                  <%= link_to post_favorites_path(post), method: :delete do %>
-                    <i class="fas fa-heart"></i>
+                <% if user_signed_in? %>
+                  <% if current_user.already_favorited?(post) %>
+                    <%= link_to post_favorites_path(post), method: :delete do %>
+                      <i class="fas fa-heart"></i>
+                    <% end %>
+                  <% else %>
+                    <%= link_to post_favorites_path(post), method: :post do %>
+                      <i class="far fa-heart"></i>
+                    <% end %>
                   <% end %>
                 <% else %>
-                  <%= link_to post_favorites_path(post), method: :post do %>
-                    <i class="far fa-heart"></i>
-                  <% end %>
+                  <i class="far fa-heart"></i>
                 <% end %>
                 <%= post.favorites.count %>
               </div>
